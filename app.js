@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 const sql = require('mssql');
 const conection = require('./conection');
+const cors = require('cors');
 const port = 3000;
 
 app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+
 
 //Asignar turnos
 app.post('/api/turnos', async (req, res) => {
@@ -32,7 +37,10 @@ app.post('/api/turnos', async (req, res) => {
 
         res.status(200).json({
             mensaje: 'Turno asignado',
-            numero_turno: nuevoNumero
+            numero_turno: nuevoNumero,
+            tipo_turno,
+            tipo_documento,
+            fecha_hora: new Date()
         });
 
     } catch (error) {
