@@ -9,7 +9,7 @@ app.use(express.json());
 //Asignar turnos
 app.post('/api/turnos', async (req, res) => {
     try {
-        const { documento, tipo_turno } = req.body;
+        const { documento, tipo_turno, tipo_documento } = req.body;
 
         // Conectar a la base de datos
         await sql.connect(conection.config);
@@ -26,8 +26,8 @@ app.post('/api/turnos', async (req, res) => {
 
         // Insertar el nuevo turno
         await sql.query`
-            INSERT INTO turnos (documento, tipo_turmo, numero_turno)
-            VALUES (${documento}, ${tipo_turno}, ${nuevoNumero})
+            INSERT INTO turnos (documento, tipo_turmo, numero_turno, tipo_documento)
+            VALUES (${documento}, ${tipo_turno}, ${nuevoNumero}, ${tipo_documento})
         `;
 
         res.status(200).json({
